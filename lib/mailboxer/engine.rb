@@ -1,5 +1,5 @@
 # Database foreign keys
-require 'foreigner'
+# require 'foreigner'
 
 module Mailboxer
   class Engine < Rails::Engine

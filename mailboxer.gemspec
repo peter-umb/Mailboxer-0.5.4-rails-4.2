@@ -15,7 +15,7 @@ Gem::Specification.new do |s|
 	# Gem dependencies
 	#
 	# SQL foreign keys
-	s.add_runtime_dependency('foreigner', '>= 0.9.1')
+	# s.add_runtime_dependency('foreigner', '>= 0.9.1')
 
 	# Development Gem dependencies
 	#
