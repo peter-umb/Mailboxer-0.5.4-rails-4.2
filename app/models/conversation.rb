@@ -81,7 +81,7 @@ class Conversation < ActiveRecord::Base
 
 	#Last message in the conversation.
 	def last_message
-		@last_message = self.messages.find(:first, :order => 'created_at DESC') if @last_message.nil?
+		@last_message = self.messages.order("created_at DESC").first if @last_message.nil?
 		return @last_message
 	end
 
