@@ -1,7 +1,6 @@
 class Receipt < ActiveRecord::Base
   belongs_to :notification, :validate => true, :autosave => true
-  # belongs_to :receiver, :polymorphic => :true
-  belongs_to :receiver, foreign_key: :receiver_id, foreign_type: :receiver_type
+  belongs_to :receiver, :polymorphic => :true
   belongs_to :message, :foreign_key => "notification_id"
 
   validates_presence_of :receiver
@@ -11,20 +10,20 @@ class Receipt < ActiveRecord::Base
   }
   #Notifications Scope checks type to be nil, not Notification because of STI behaviour
   #with the primary class (no type is saved)
-  scope :notifications_receipts, joins(:notification).where('notifications.type' => nil)
-  scope :messages_receipts, joins(:notification).where('notifications.type' => Message.to_s)
+  scope :notifications_receipts, -> {joins(:notification).where('notifications.type' => nil)}
+  scope :messages_receipts, -> {joins(:notification).where('notifications.type' => Message.to_s)}
   scope :notification, lambda { |notification|
     where(:notification_id => notification.id)
   }
   scope :conversation, lambda { |conversation|
     joins(:message).where('notifications.conversation_id' => conversation.id)
   }
-  scope :sentbox, where(:mailbox_type => "sentbox")
-  scope :inbox, where(:mailbox_type => "inbox")
-  scope :trash, where(:trashed => true)
-  scope :not_trash, where(:trashed => false)
-  scope :read, where(:read => true)
-  scope :unread, where(:read => false)
+  scope :sentbox, -> {where(:mailbox_type => "sentbox")}
+  scope :inbox, -> {where(:mailbox_type => "inbox")}
+  scope :trash, -> {where(:trashed => true)}
+  scope :not_trash, -> {where(:trashed => false)}
+  scope :read, -> {where(:read => true)}
+  scope :unread, -> {where(:read => false)}
 
   after_validation :remove_duplicate_errors
   class << self
