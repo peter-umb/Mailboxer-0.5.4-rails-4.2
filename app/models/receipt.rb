@@ -60,19 +60,19 @@ class Receipt < ActiveRecord::Base
     #This methods helps to do a update_all with table joins, not currently supported by rails.
     #Acording to the github ticket https://github.com/rails/rails/issues/522 it should be
     #supported with 3.2. 
-    def update_receipts(updates,options={})
+   def update_receipts(updates,options={})
       ids = Array.new
       where(options).each do |rcp|
         ids << rcp.id
       end
       return if ids.empty?      
       conditions = [""].concat(ids)
-      condition = "id = ? "
+      condition = "receipts.id = ? "
       ids.drop(1).each do
-        condition << "OR id = ? "
+        condition << "OR receipts.id = ? "
       end
       conditions[0] = condition
-      Receipt.except(:where).except(:joins).where(conditions).update_all(updates)
+      Receipt.where(conditions).update_all(updates)
     end
   end
 
