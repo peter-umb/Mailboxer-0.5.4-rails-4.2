@@ -2,7 +2,7 @@ class Receipt < ActiveRecord::Base
   belongs_to :notification, :validate => true, :autosave => true
   belongs_to :receiver, :polymorphic => :true
   belongs_to :message, :foreign_key => "notification_id"
-
+  # Trying change
   validates_presence_of :receiver
 
   scope :recipient, lambda { |recipient|
