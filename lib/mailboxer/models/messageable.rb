@@ -35,7 +35,6 @@ module Mailboxer
            EOM
         #Gets the mailbox of the messageable
         def mailbox
-          awesome_print self
           @mailbox = Mailbox.new(self) if @mailbox.nil?
           @mailbox.type = :all
           return @mailbox
