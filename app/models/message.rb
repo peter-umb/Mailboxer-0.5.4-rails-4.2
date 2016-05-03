@@ -45,7 +45,7 @@ class Message < Notification
         if Mailboxer.uses_emails 
           email_to = r.send(Mailboxer.email_method,self)
           unless email_to.blank?
-            MessageMailer.send_email(self,r).deliver
+            MessageMailer.send_email(self,r).deliver_now
           end
         end
       end
